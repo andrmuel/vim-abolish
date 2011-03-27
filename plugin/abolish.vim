@@ -567,6 +567,8 @@ call extend(Abolish.Coercions, {
             \}, "keep")
 
 function! s:coerce(transformation)
+    let l:clipboard = &clipboard
+    set clipboard=
     let regbody = getreg('"')
     let regtype = getregtype('"')
     let c = v:count1
@@ -591,6 +593,7 @@ function! s:coerce(transformation)
     if exists("changed")
         silent! call repeat#set("\<Plug>Coerce".a:transformation)
     endif
+    let &clipboard = l:clipboard
 endfunction
 
 nnoremap <silent> <Plug>Coerce :<C-U>call <SID>coerce(nr2char(getchar()))<CR>
